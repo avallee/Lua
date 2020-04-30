@@ -69,6 +69,9 @@ off = S{'off', 'no', 'false'}
 
 modes = S{'whitelist', 'blacklist'}
 
+at_sorry = string.char(0xFD, 0x02, 0x02, 0x01, 0x05 , 0xFD)
+at_partyfull = string.char(0xFD, 0x02, 0x02, 0x13, 0x0C , 0xFD)
+
 -- Load settings from file
 settings = config.load(defaults)
 
@@ -106,7 +109,7 @@ function try_invite(player)
     if windower.ffxi.get_party().p5 then
         notice(player.. 'cannot be invited - party is full')
         if settings.tell_back == 'on' then
-            windower.send_command('input /t '..player..' Party is currently full.')
+            windower.send_command('input /t '..player..' '..at_sorry..at_partyfull)
         end
         return
     end
